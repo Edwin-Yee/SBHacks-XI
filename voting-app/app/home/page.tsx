@@ -7,10 +7,12 @@ import { mockPolicies } from '../../data/mockPolicies';
 import PolicyCard from '../../components/PolicyCard';
 import SwipeButtons from '../../components/SwipeButtons';
 import Results from '../../components/Results';
+import Modal from '../../components/Modal';
 
 export default function Home() {
   const [policies, setPolicies] = useState<PolicyProposal[]>(mockPolicies);
   const [voteResults, setVoteResults] = useState<VoteResult>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSwipe = (direction: 'left' | 'right', policyId: string) => {
     setVoteResults((prev) => ({ ...prev, [policyId]: direction }));
@@ -23,9 +25,31 @@ export default function Home() {
     }
   };
 
+  const addNewPolicy = (title: string, description: string) => {
+    const newPolicy: PolicyProposal = {
+      id: `policy-${policies.length + 1}`,
+      title,
+      description,
+    };
+    setPolicies((prev) => [...prev, newPolicy]);
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
       <h1 className="text-4xl font-bold mb-8">Policy Swiper</h1>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="mb-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
+      >
+        Add New Policy
+      </button>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={addNewPolicy}
+      />
+
       {policies.length > 0 ? (
         <>
           {/* <div className="relative w-full max-w-sm h-[400px]"> */}
