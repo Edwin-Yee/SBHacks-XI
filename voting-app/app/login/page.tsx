@@ -1,6 +1,7 @@
 // app/login/page.tsx
 'use client';
 
+import { redirect } from 'next/navigation';
 import React, { useState } from 'react';
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -13,6 +14,7 @@ const Login: React.FC = () => {
                 <h1>Login</h1>
                 <GoogleLogin onSuccess={(credentialResponse) => {
                     console.log(credentialResponse);
+                    redirect('/home');
                 }} onError={() => console.log("Login Failed")} />
             </div>
         </GoogleOAuthProvider>

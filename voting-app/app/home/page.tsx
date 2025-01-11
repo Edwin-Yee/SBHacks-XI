@@ -28,19 +28,33 @@ export default function Home() {
       <h1 className="text-4xl font-bold mb-8">Policy Swiper</h1>
       {policies.length > 0 ? (
         <>
-          <div className="relative w-full max-w-sm h-[400px]">
+          {/* <div className="relative w-full max-w-sm h-[400px]"> */}
+          <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
             {policies.map((policy) => (
-              <TinderCard
+              <div
                 key={policy.id}
-                onSwipe={(dir) => handleSwipe(dir as 'left' | 'right', policy.id)}
-                onCardLeftScreen={() => setPolicies((prev) => prev.slice(0, -1))}
-                className="absolute"
+                className="relative w-full h-[300px] bg-white shadow-md rounded-lg p-4"
               >
                 <PolicyCard policy={policy} />
-              </TinderCard>
+                <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
+              </div>
+
+              // Disable TinderCard for now
+              // <TinderCard
+              //   key={policy.id}
+              //   preventSwipe = {['up', 'down']}
+              //   swipeThreshold={5000000}
+              //   onSwipe={(dir) => handleSwipe(dir as 'left' | 'right', policy.id)}
+              //   onCardLeftScreen={() => setPolicies((prev) => prev.slice(0, -1))}
+              //   // className="absolute"
+              //   className="relative w-full h-[300px]"
+              // >
+              //   <PolicyCard policy={policy} />
+              //   <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
+              // </TinderCard>
             ))}
           </div>
-          <SwipeButtons onSwipe={handleButtonSwipe} />
+          {/* <SwipeButtons onSwipe={handleButtonSwipe} /> */}
         </>
       ) : (
         <Results voteResults={voteResults} policies={mockPolicies} />
@@ -48,4 +62,3 @@ export default function Home() {
     </main>
   );
 }
-
