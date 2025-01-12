@@ -8,7 +8,7 @@ Date: Jan 11th, 2025
 - cd SBHacks-XI
 - cd voting-app
 
-2. Install npm
+2. Install npm:
 ```npm install```
 
 3. Run the test server:
