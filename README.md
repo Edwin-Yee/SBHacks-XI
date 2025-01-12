@@ -2,19 +2,17 @@
 Developers: Edwin Yee, William Su, Cooper Dalton
 Date: Jan 11th, 2025
 
-Clone the GitHub Repository:
-git clone https://github.com/Edwin-Yee/SBHacks-XI/
-cd SBHacks-XI
-cd voting-app
+1. Clone the GitHub Repository:
+- git clone https://github.com/Edwin-Yee/SBHacks-XI/
+- cd SBHacks-XI
+- cd voting-app
 
-Run the test server:
+2. Run the test server:
 ```npm run dev```
 
-Open http://localhost:3000 in your browser.
+3. Open http://localhost:3000 in your browser.
 
 For executing contracts on Midnight you will need to have a Midnight wallet and a proof server. Please follow instructions in the following link: https://docs.midnight.network/develop/tutorial/using/prereqs
-
-
 
 ##Inspiration
 When voting for school policies, we often felt stressed about how the people collecting our votes would judge our decisions. Voting for associated student board members and school policies influences every student in the university, yet many students are reluctant to vote due to privacy concerns about how their data is used. VotEdu enables students to vote in complete privacy by utilizing the Midnight blockchain technology to securely create smart contracts containing information about their vote (Yay/Nay). School administrators can see aggregate statistics but cannot deduce the identity of the individual as their persona is encrypted.
