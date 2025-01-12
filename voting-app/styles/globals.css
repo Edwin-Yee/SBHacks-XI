@@ -1,0 +1,4 @@
+.google-login-container > div {
+    transform: scale(15.0); /* Adjust the scale as needed */
+    transform-origin: center;
+  }

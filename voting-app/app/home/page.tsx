@@ -8,6 +8,9 @@ import PolicyCard from '../../components/PolicyCard';
 import SwipeButtons from '../../components/SwipeButtons';
 import Results from '../../components/Results';
 import Modal from '../../components/Modal';
+import { googleLogout } from '@react-oauth/google';
+import { useRouter } from 'next/navigation';
+import { Navbar } from "../../components/navbar";
 
 export default function Home() {
   const ValidEmails = ["cooperdalton@ucsb.edu"];
@@ -20,6 +23,7 @@ export default function Home() {
     email = JSON.parse(storedUser).email;
   }
   console.log(email);
+  const router = useRouter();
 
   const handleSwipe = (direction: 'left' | 'right', policyId: string) => {
     setVoteResults((prev) => ({ ...prev, [policyId]: direction }));
@@ -40,89 +44,131 @@ export default function Home() {
     };
     setPolicies((prev) => [...prev, newPolicy]);
   };
+
+  const handleLogout = () => {
+    googleLogout();
+    localStorage.removeItem('user');
+    router.push('/login'); // Redirect to the login page
+  };
+
   if (ValidEmails.includes(email)) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
-        <h1 className="text-4xl font-bold mb-8">Policy Swiper</h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="mb-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
-        >
-          Add New Policy
-        </button>
+      <div>
+        <Navbar />
 
-        <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSubmit={addNewPolicy}
-        />
+        <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
+          <h1 className="text-4xl font-bold mb-8">Policy Swiper</h1>
 
-        {policies.length > 0 ? (
-          <>
-            {/* <div className="relative w-full max-w-sm h-[400px]"> */}
-            <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
-              {policies.map((policy) => (
-                <div
-                  key={policy.id}
-                  className="relative w-full h-[300px] bg-white shadow-md rounded-lg p-4"
-                >
-                  <PolicyCard policy={policy} />
-                  <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
-                </div>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="mb-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
+          >
+            Add New Policy
+          </button>
 
-                // Disable TinderCard for now
-                // <TinderCard
-                //   key={policy.id}
-                //   preventSwipe = {['up', 'down']}
-                //   swipeThreshold={5000000}
-                //   onSwipe={(dir) => handleSwipe(dir as 'left' | 'right', policy.id)}
-                //   onCardLeftScreen={() => setPolicies((prev) => prev.slice(0, -1))}
-                //   // className="absolute"
-                //   className="relative w-full h-[300px]"
-                // >
-                //   <PolicyCard policy={policy} />
-                //   <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
-                // </TinderCard>
-              ))}
-            </div>
-            {/* <SwipeButtons onSwipe={handleButtonSwipe} /> */}
-          </>
-        ) : (
-          <Results voteResults={voteResults} policies={mockPolicies} />
-        )}
-      </main>
+
+          <div>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+
+
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onSubmit={addNewPolicy}
+          />
+
+          {policies.length > 0 ? (
+            <>
+              {/* <div className="relative w-full max-w-sm h-[400px]"> */}
+              <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
+                {policies.map((policy) => (
+                  <div
+                    key={policy.id}
+                    className="relative w-full h-[300px] bg-white shadow-md rounded-lg p-4"
+                  >
+                    <PolicyCard policy={policy} />
+                    <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
+                  </div>
+
+                  // Disable TinderCard for now
+                  // <TinderCard
+                  //   key={policy.id}
+                  //   preventSwipe = {['up', 'down']}
+                  //   swipeThreshold={5000000}
+                  //   onSwipe={(dir) => handleSwipe(dir as 'left' | 'right', policy.id)}
+                  //   onCardLeftScreen={() => setPolicies((prev) => prev.slice(0, -1))}
+                  //   // className="absolute"
+                  //   className="relative w-full h-[300px]"
+                  // >
+                  //   <PolicyCard policy={policy} />
+                  //   <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
+                  // </TinderCard>
+                ))}
+              </div>
+              {/* <SwipeButtons onSwipe={handleButtonSwipe} /> */}
+            </>
+          ) : (
+            <Results voteResults={voteResults} policies={mockPolicies} />
+          )}
+        </main>
+      </div>
     );
   } else {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
-        <h1 className="text-4xl font-bold mb-8">Policy Swiper</h1>
+      <div>
+        <Navbar />
 
-        <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSubmit={addNewPolicy}
-        />
+        <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
+          <h1 className="text-4xl font-bold mb-8">Policy Swiper</h1>
 
-        {policies.length > 0 ? (
-          <>
-            { }
-            <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
-              {policies.map((policy) => (
-                <div
-                  key={policy.id}
-                  className="relative w-full h-[300px] bg-white shadow-md rounded-lg p-4"
-                >
-                  <PolicyCard policy={policy} />
-                  <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
-                </div>
-              ))}
-            </div>
-            { }
-          </>
-        ) : (
-          <Results voteResults={voteResults} policies={mockPolicies} />
-        )}
-      </main>
+
+          <div>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+
+
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onSubmit={addNewPolicy}
+          />
+
+          {policies.length > 0 ? (
+            <>
+              {/* <div className="relative w-full max-w-sm h-[400px]"> */}
+              <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
+                {policies.map((policy) => (
+                  <div
+                    key={policy.id}
+                    className="relative w-full h-[300px] bg-white shadow-md rounded-lg p-4"
+                  >
+                    <PolicyCard policy={policy} />
+                    <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
+                  </div>
+
+                  // Disable TinderCard for now
+                  // <TinderCard
+                  //   key={policy.id}
+                  //   preventSwipe = {['up', 'down']}
+                  //   swipeThreshold={5000000}
+                  //   onSwipe={(dir) => handleSwipe(dir as 'left' | 'right', policy.id)}
+                  //   onCardLeftScreen={() => setPolicies((prev) => prev.slice(0, -1))}
+                  //   // className="absolute"
+                  //   className="relative w-full h-[300px]"
+                  // >
+                  //   <PolicyCard policy={policy} />
+                  //   <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
+                  // </TinderCard>
+                ))}
+              </div>
+              {/* <SwipeButtons onSwipe={handleButtonSwipe} /> */}
+            </>
+          ) : (
+            <Results voteResults={voteResults} policies={mockPolicies} />
+          )}
+        </main>
+      </div>
     );
   }
 }
