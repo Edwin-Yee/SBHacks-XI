@@ -8,8 +8,6 @@ import PolicyCard from '../../components/PolicyCard';
 import SwipeButtons from '../../components/SwipeButtons';
 import Results from '../../components/Results';
 import Modal from '../../components/Modal';
-import { googleLogout } from '@react-oauth/google';
-import { useRouter } from 'next/navigation';
 import { Navbar } from "../../components/navbar";
 
 export default function Home() {
@@ -23,7 +21,6 @@ export default function Home() {
     email = JSON.parse(storedUser).email;
   }
   console.log(email);
-  const router = useRouter();
 
   const handleSwipe = (direction: 'left' | 'right', policyId: string) => {
     setVoteResults((prev) => ({ ...prev, [policyId]: direction }));
@@ -45,12 +42,6 @@ export default function Home() {
     setPolicies((prev) => [...prev, newPolicy]);
   };
 
-  const handleLogout = () => {
-    googleLogout();
-    localStorage.removeItem('user');
-    router.push('/login'); // Redirect to the login page
-  };
-
   if (ValidEmails.includes(email)) {
     return (
       <div>
@@ -65,12 +56,6 @@ export default function Home() {
           >
             Add New Policy
           </button>
-
-
-          <div>
-            <button onClick={handleLogout}>Logout</button>
-          </div>
-
 
           <Modal
             isOpen={isModalOpen}
@@ -121,12 +106,6 @@ export default function Home() {
 
         <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
           <h1 className="text-4xl font-bold mb-8">Policy Swiper</h1>
-
-
-          <div>
-            <button onClick={handleLogout}>Logout</button>
-          </div>
-
 
           <Modal
             isOpen={isModalOpen}
