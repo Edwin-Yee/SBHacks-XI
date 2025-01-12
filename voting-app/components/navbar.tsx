@@ -1,6 +1,8 @@
 // Source: https://github.com/ErickRomeroDev/hackathon-midnight-2/blob/main/README.md
 import Image from "next/image";
 import Link from "next/link";
+import { googleLogout } from '@react-oauth/google';
+import { useRouter } from 'next/navigation';
 
 import {
   Popover,
@@ -25,6 +27,14 @@ const icons: IconsType[] = [
 ];
 
 export const Navbar = () => {
+  const router = useRouter();
+  
+  const handleLogout = () => {
+    googleLogout();
+    localStorage.removeItem('user');
+    router.push('/login'); // Redirect to the login page
+  };
+
   return (
     <div className="flex items-center justify-between h-20 px-10 text-[16px]">
       <div className="flex gap-x-20">
@@ -34,12 +44,12 @@ export const Navbar = () => {
           width={100}
           height={50}
         />
-        <h1>Hackathon demo - Q&A Dashboard (Next.js 14 App router)</h1>
+        <h1>SBHacks XI Hackathon demo - Blockchain Powered Voting Platform</h1>
       </div>
 
       <div className="flex gap-x-12">
         <Link
-          href="https://github.com/ErickRomeroDev/hackathon-midnight-2/blob/main/README.md"
+          href="https://github.com/Edwin-Yee/SBHacks-XI/blob/main/README.md"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -85,6 +95,13 @@ export const Navbar = () => {
             </div>
           </PopoverContent>
         </Popover>
+
+        <button className="bg-blue-500">
+          Click Me
+        </button>
+
+        <button onClick={handleLogout}>Logout</button>
+
       </div>
     </div>
   );
