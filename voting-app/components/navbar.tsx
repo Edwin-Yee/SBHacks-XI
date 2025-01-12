@@ -14,14 +14,14 @@ type IconsType = {
 };
 
 const icons: IconsType[] = [
-    // { src: "/brush.svg", alt: "ui" },
-    // { src: "/next-icon.svg", alt: "next" },
-    // { src: "/database.svg", alt: "database" },
-    { src: "/code.svg", alt: "code" },
-    // { src: "/layers.svg", alt: "layers" },
-    { src: "/proof.svg", alt: "proof" },
-    { src: "/lock.svg", alt: "lock" },
-    { src: "/midnight-icon.svg", alt: "compact" },
+  // { src: "/brush.svg", alt: "ui" },
+  // { src: "/next-icon.svg", alt: "next" },
+  // { src: "/database.svg", alt: "database" },
+  { src: "/code.svg", alt: "code" },
+  // { src: "/layers.svg", alt: "layers" },
+  { src: "/proof.svg", alt: "proof" },
+  { src: "/lock.svg", alt: "lock" },
+  { src: "/midnight-icon.svg", alt: "compact" },
 ];
 
 export const Navbar = () => {
@@ -59,9 +59,9 @@ export const Navbar = () => {
             <div className=" h-30 flex gap-x-4 w-60  ">
               <div className="flex flex-col justify-between ">
                 {icons.map((item, index) => (
-                  <div  key={index} className="py-1">
+                  <div key={index} className="py-1">
                     <Image
-                     
+
                       src={item.src}
                       alt={item.alt}
                       height={13}
@@ -79,7 +79,7 @@ export const Navbar = () => {
                 <p>Reactive Blockchain indexer</p> */}
                 <p>Google Authentication</p>
                 <p>Proof Server</p>
-                <p>Zero Knowledge circuits</p>
+                <p>Zero Knowledge Proofs</p>
                 <p>Compact Smart Contracts</p>
               </div>
             </div>
