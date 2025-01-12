@@ -9,7 +9,10 @@ import SwipeButtons from '../../components/SwipeButtons';
 import Results from '../../components/Results';
 import Modal from '../../components/Modal';
 import { Navbar } from "../../components/navbar";
-
+import Image from "next/image";
+import AppWalletProvider from "../../components/AppWalletProvider";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+ 
 export default function Home() {
   const ValidEmails = ["cooperdalton@ucsb.edu"];
   const [policies, setPolicies] = useState<PolicyProposal[]>(mockPolicies);
@@ -42,20 +45,40 @@ export default function Home() {
     setPolicies((prev) => [...prev, newPolicy]);
   };
 
-  if (ValidEmails.includes(email)) {
-    return (
-      <div>
-        <Navbar />
+  var emailIsValid = ValidEmails.includes(email);
 
-        <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
+  return (
+    <AppWalletProvider children={
+      <div>
+        <Navbar></Navbar>
+
+        <main className="flex min-h-screen flex-col items-center justify-center p-24">
+          <Image
+            src="/gradient-bg-new.png"
+            layout="fill" 
+            objectFit="cover" 
+            objectPosition="center" 
+            alt="Background"
+            quality={100} 
+            priority 
+            className="absolute -z-10" 
+          ></Image>
+
+
           <h1 className="text-4xl font-bold mb-8">Policy Swiper</h1>
 
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="mb-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
-          >
-            Add New Policy
-          </button>
+          <div className="border hover:border-slate-900 rounded">
+            <WalletMultiButton style={{}} />
+          </div>
+        
+          {emailIsValid && 
+            <button
+                onClick={() => setIsModalOpen(true)}
+                className="mb-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
+              >
+                Add New Policy
+            </button>
+          }
 
           <Modal
             isOpen={isModalOpen}
@@ -97,57 +120,7 @@ export default function Home() {
             <Results voteResults={voteResults} policies={mockPolicies} />
           )}
         </main>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <Navbar />
-
-        <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
-          <h1 className="text-4xl font-bold mb-8">Policy Swiper</h1>
-
-          <Modal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            onSubmit={addNewPolicy}
-          />
-
-          {policies.length > 0 ? (
-            <>
-              {/* <div className="relative w-full max-w-sm h-[400px]"> */}
-              <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
-                {policies.map((policy) => (
-                  <div
-                    key={policy.id}
-                    className="relative w-full h-[300px] bg-white shadow-md rounded-lg p-4"
-                  >
-                    <PolicyCard policy={policy} />
-                    <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
-                  </div>
-
-                  // Disable TinderCard for now
-                  // <TinderCard
-                  //   key={policy.id}
-                  //   preventSwipe = {['up', 'down']}
-                  //   swipeThreshold={5000000}
-                  //   onSwipe={(dir) => handleSwipe(dir as 'left' | 'right', policy.id)}
-                  //   onCardLeftScreen={() => setPolicies((prev) => prev.slice(0, -1))}
-                  //   // className="absolute"
-                  //   className="relative w-full h-[300px]"
-                  // >
-                  //   <PolicyCard policy={policy} />
-                  //   <SwipeButtons onSwipe={(dir) => handleSwipe(dir, policy.id)} />
-                  // </TinderCard>
-                ))}
-              </div>
-              {/* <SwipeButtons onSwipe={handleButtonSwipe} /> */}
-            </>
-          ) : (
-            <Results voteResults={voteResults} policies={mockPolicies} />
-          )}
-        </main>
-      </div>
-    );
-  }
+        </div>
+    }></AppWalletProvider>
+  );
 }
