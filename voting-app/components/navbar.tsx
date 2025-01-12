@@ -4,6 +4,7 @@ import Link from "next/link";
 import { googleLogout } from '@react-oauth/google';
 import { useRouter } from 'next/navigation';
 
+ 
 import {
   Popover,
   PopoverContent,
@@ -36,7 +37,21 @@ export const Navbar = () => {
   };
 
   return (
+    
     <div className="flex items-center justify-between h-20 px-10 text-[16px]">
+{/* 
+      <Image
+          src="/grad-bg.png"
+          layout="fill" 
+          objectFit="cover" 
+          objectPosition="center" 
+          alt="Background"
+          quality={100} 
+          priority 
+          className="absolute -z-11" 
+        ></Image> */}
+
+
       <div className="flex gap-x-20">
         <Image
           src="/midnight-logo-black.svg"
@@ -47,7 +62,7 @@ export const Navbar = () => {
         <h1>SBHacks XI Hackathon demo - Blockchain Powered Voting Platform</h1>
       </div>
 
-      <div className="flex gap-x-12">
+      <div className="flex gap-x-12" items-center>
         <Link
           href="https://github.com/Edwin-Yee/SBHacks-XI/blob/main/README.md"
           target="_blank"
@@ -95,14 +110,14 @@ export const Navbar = () => {
             </div>
           </PopoverContent>
         </Popover>
+        
+                
 
-        <button className="bg-blue-500">
-          Click Me
+        <button onClick={handleLogout} className="bg-red-500 text-white text-sm py-1 px-2 rounded hover:bg-red-600 transition-colors">
+          Logout
         </button>
+        </div>
 
-        <button onClick={handleLogout}>Logout</button>
-
-      </div>
     </div>
   );
 };
