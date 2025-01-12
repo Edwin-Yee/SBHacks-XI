@@ -56,7 +56,7 @@ export const Navbar = () => {
             </button>
           </PopoverTrigger>
           <PopoverContent>
-            <div className=" h-30 flex gap-x-4 w-60  ">
+            <div className=" h- flex gap-x-4 w-60  ">
               <div className="flex flex-col justify-between ">
                 {icons.map((item, index) => (
                   <div  key={index} className="py-1">
@@ -85,6 +85,10 @@ export const Navbar = () => {
             </div>
           </PopoverContent>
         </Popover>
+
+        <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors">
+          Click Me
+        </button>
       </div>
     </div>
   );
