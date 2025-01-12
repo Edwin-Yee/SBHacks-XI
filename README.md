@@ -2,15 +2,19 @@
 Developers: Edwin Yee, William Su, Cooper Dalton
 Date: Jan 11th, 2025
 
+## Quick Start
 1. Clone the GitHub Repository:
 - git clone https://github.com/Edwin-Yee/SBHacks-XI/
 - cd SBHacks-XI
 - cd voting-app
 
-2. Run the test server:
+2. Install npm
+```npm install```
+
+3. Run the test server:
 ```npm run dev```
 
-3. Open http://localhost:3000 in your browser.
+4. Open http://localhost:3000 in your browser.
 
 For executing contracts on Midnight you will need to have a Midnight wallet and a proof server. Please follow instructions in the following link: https://docs.midnight.network/develop/tutorial/using/prereqs
 
