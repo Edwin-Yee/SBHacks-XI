@@ -8,11 +8,15 @@ import PolicyCard from '../../components/PolicyCard';
 import SwipeButtons from '../../components/SwipeButtons';
 import Results from '../../components/Results';
 import Modal from '../../components/Modal';
+import { googleLogout } from '@react-oauth/google';
+import { useRouter } from 'next/navigation';
+import { Navbar } from "../../components/navbar";
 
 export default function Home() {
   const [policies, setPolicies] = useState<PolicyProposal[]>(mockPolicies);
   const [voteResults, setVoteResults] = useState<VoteResult>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
 
   const handleSwipe = (direction: 'left' | 'right', policyId: string) => {
     setVoteResults((prev) => ({ ...prev, [policyId]: direction }));
@@ -34,15 +38,31 @@ export default function Home() {
     setPolicies((prev) => [...prev, newPolicy]);
   };
 
+  const handleLogout = () => {
+    googleLogout();
+    localStorage.removeItem('user');
+    router.push('/login'); // Redirect to the login page
+  };
+  
   return (
+    <div>
+        <Navbar />
+
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
       <h1 className="text-4xl font-bold mb-8">Policy Swiper</h1>
+
       <button
         onClick={() => setIsModalOpen(true)}
         className="mb-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
       >
         Add New Policy
       </button>
+
+
+      <div>
+          <button onClick={handleLogout}>Logout</button>
+      </div>
+      
 
       <Modal
         isOpen={isModalOpen}
@@ -84,5 +104,6 @@ export default function Home() {
         <Results voteResults={voteResults} policies={mockPolicies} />
       )}
     </main>
+    </div>
   );
 }
